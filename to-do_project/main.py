@@ -6,3 +6,7 @@ STATUS = {
     MEDIUM: "medium",
     HIGH: "high"
 }
+
+def add_to_db(text):
+    with open('db.txt','a') as db:
+        db.write('\n' + text)
