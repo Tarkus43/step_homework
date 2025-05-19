@@ -31,4 +31,7 @@ def todo_to_dict(todo:str) -> dict:
     todo_dict = dict(zip(KEYS,todo_list))
     return todo_dict
 
-print(todo_to_dict('new todo/im gonna to test this func/6/4/high'))
+def dict_to_todo(todo:dict[str:str,str:str,str:int,str:int,str:str]) -> str:
+    return '/'.join([x for x in todo.values()])
+
+print(dict_to_todo(todo_to_dict('new todo/im gonna to test this func/6/4/high')))
