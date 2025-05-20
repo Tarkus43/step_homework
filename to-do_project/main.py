@@ -10,16 +10,6 @@ STATUS = {
 TODO_DICT = {'name':None, 'descr':None, 'id':None, 'prio':None, 'status':None}
 KEYS = ['name', 'descr', 'id', 'prio', 'status']
 
-# !!!NEEDS AN UPDATE!!! adds todo to txt file
-def add_todo(name:str, text:str,prio:int,status) -> None:
-    with open('db.txt','r') as db:
-        id = None
-        for line in db:
-            id = int(line) + 1 
-            break
-    with open('db.txt','a') as db:
-        db.write('\n' + f'{name}/{text}/{id}/{prio}/{status}')
-
 # !!!NEEDS AN UPDATE!!! gets highest id to find last todo
 def get_last_id() -> int:
     max_id = 0
@@ -38,4 +28,11 @@ def todo_to_dict(todo:str) -> dict:
 # changes todo in dict format to string format for reading or adding to txt file
 def dict_to_todo(todo:dict[str:str,str:str,str:int,str:int,str:str]) -> str:
     return '/'.join([x for x in todo.values()])
+
+# adds todo to txt file
+def add_todo(todo:dict) -> None:
+    with open('db.txt','a') as db:
+        db.write('\n' + dict_to_todo(todo))
+
+add_todo(todo_to_dict('new todo/im gonna to test this func/8/4/high'))
 
