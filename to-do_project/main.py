@@ -35,5 +35,13 @@ def get_last_id() -> int:
                 max_id = line.split('/')[2]
     return max_id  
 
-print(get_last_id())
+def get_todo(id:int) -> str:
+    if id > int(get_last_id()):
+        return 'ERROR: id does not exist'
+    with open('db.txt','r') as file:
+        for line in file:
+            if todo_to_dict(line)['id'] == id:
+                return line
+
+print(get_todo(9))
 
