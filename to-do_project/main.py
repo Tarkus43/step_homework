@@ -46,5 +46,16 @@ def get_todo(id:int) -> str:
 def next_id():
     return get_last_id() + 1
 
-print(next_id())
+def find_todo(key_word:str) -> list[dict]:
+    todo_list = []
+    with open('db.txt','r') as file:
+        for todo in file:
+            if key_word in todo_to_dict(todo)['name'] or key_word in todo_to_dict(todo)['descr']:
+                todo_list.append(todo_to_dict(todo))
+    if len(todo_list) == 0:
+        return 'Did not found'
+    else:
+        return todo_list
+
+print(find_todo('func'))            
 
