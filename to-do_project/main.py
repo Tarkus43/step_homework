@@ -76,7 +76,21 @@ def change_todo(id: int, param: str, text: str) -> str:
         for todo in todo_list:
             file.write(dict_to_todo(todo) + '\n')
 
+def delete_todo(id:int):
+    todo_list = []
+    with open('db.txt', 'r') as file:
+        for line in file:
+            todo_list.append(todo_to_dict(line.strip()))
+    
+    for i in range(len(todo_list)):
+        if todo_list[i]['id'] == id:
+            del todo_list[i]
+            break
+    
+    with open('db.txt', 'w') as file:
+        for todo in todo_list:
+            file.write(dict_to_todo(todo) + '\n')
 
-change_todo(1,'descr','i tested this shit nigga')    
+delete_todo(3)
 
 
