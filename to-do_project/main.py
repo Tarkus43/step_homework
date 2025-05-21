@@ -35,6 +35,7 @@ def get_last_id() -> int:
                 max_id = line.split('/')[2]
     return int(max_id)  
 
+# gets todo in str type
 def get_todo(id:int) -> str:
     if id > get_last_id():
         return 'ERROR: id does not exist'
@@ -43,9 +44,11 @@ def get_todo(id:int) -> str:
             if todo_to_dict(line)['id'] == id:
                 return line
 
+# gets next id
 def next_id():
     return get_last_id() + 1
 
+# finds todos by keyword
 def find_todo(key_word:str) -> list[dict]:
     todo_list = []
     with open('db.txt','r') as file:
