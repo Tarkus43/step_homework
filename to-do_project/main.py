@@ -61,6 +61,7 @@ def find_todo(key_word:str) -> list[dict]:
     else:
         return todo_list
 
+# changing todo and rewriting it to file
 def change_todo(id: int, param: str, text: str) -> str:
     todo_list = []
     with open('db.txt', 'r') as file:
@@ -76,6 +77,7 @@ def change_todo(id: int, param: str, text: str) -> str:
         for todo in todo_list:
             file.write(dict_to_todo(todo) + '\n')
 
+# deleting todo from txt file
 def delete_todo(id:int):
     todo_list = []
     with open('db.txt', 'r') as file:
@@ -91,6 +93,5 @@ def delete_todo(id:int):
         for todo in todo_list:
             file.write(dict_to_todo(todo) + '\n')
 
-delete_todo(3)
 
 
