@@ -1,8 +1,9 @@
+import copy
 # consts
-LOW = "1"
+HIGH = "1"
 MEDIUM = "2"
-HIGH = "3"
-STATUS = {
+LOW = "3"
+PRIORITY = {
     LOW: "low",
     MEDIUM: "medium",
     HIGH: "high"
@@ -13,6 +14,8 @@ EXAMPLE = 'name/description of todo/1/3/high'
 
 # changes todo from string format to dict format so python can easily work with it
 def todo_to_dict(todo:str) -> dict:
+    if len(todo) < 9:
+        return None
     todo_list = todo.split('/')
     todo_dict = dict(zip(KEYS,todo_list))
     todo_dict['id'] = int(todo_dict['id'])
@@ -32,6 +35,8 @@ def get_last_id() -> int:
     max_id = 0
     with open('db.txt','r') as db:
         for line in db:
+            if len(line) < 9:
+                continue
             if todo_to_dict(line)['id'] > int(max_id):
                 max_id = line.split('/')[2]
     return int(max_id)  
@@ -92,6 +97,32 @@ def delete_todo(id:int):
     with open('db.txt', 'w') as file:
         for todo in todo_list:
             file.write(dict_to_todo(todo) + '\n')
+
+# interface 
+while True:
+    user_input = input('Добавить задачу: 1 \nПросмотреть задач: 2 \nОбновить задачу : 3 \nУдалить задачу: 4 \nВыйти из программы: 0 \n -->')
+    match user_input:
+        case '0':
+            print('завершение...')
+            print('завершено')
+
+            break
+        case '1':
+            name = input('Введите имя задачи! \n--> ')
+            descr = input('Введите описание задачи! \n--> ')
+            prio = input('Введите приоритет задачи! \n1, 2 или 3 где 1 самый высокий \n--> ')
+            status = input('Введите cтатус задачи! \nактивно: 1 \nв процессе: 2 \nзаброшено, выполнено: 3 \n--> ')
+            if prio == '1' or prio == '2' or prio == '3':
+                if status == '1' or status == '2' or status == '3':
+                    add_todo({'name':name, 'descr':descr, 'id':next_id(), 'prio':prio, 'status':status})
+                    print('\nзадача успешно добавлена\n!')
+                else: 
+                    print('некоректный статус')
+                    continue
+            else:
+                print("некорректный приоритет")
+                continue
+
 
 
 
