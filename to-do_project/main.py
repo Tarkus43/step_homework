@@ -1,4 +1,4 @@
-import copy
+
 # consts
 HIGH = "1"
 MEDIUM = "2"
