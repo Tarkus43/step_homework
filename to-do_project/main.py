@@ -17,7 +17,7 @@ TODO_DICT = {'name':None, 'descr':None, 'id':None, 'prio':None, 'status':None}
 KEYS = ['name', 'descr', 'id', 'prio', 'status']
 EXAMPLE = 'name/description of todo/1/3/high'             
 
-def todos_to_list():
+def todos_to_list() -> list[dict]:
     todo_list = []
     with open('db.txt', 'r') as file:
         for line in file:
@@ -73,7 +73,7 @@ def get_todo(id:int) -> str:
 
 
 # gets next id
-def next_id():
+def next_id() -> int:
     return get_last_id() + 1
 
 
@@ -110,7 +110,7 @@ def change_todo(id: int, param: str, text: str) -> str:
 
 
 # deleting todo from txt file
-def delete_todo(id:int):
+def delete_todo(id:int) -> str:
     try:
         if get_todo(id) == 'ERROR: id does not exist':
             raise IndexError
@@ -134,11 +134,21 @@ def delete_todo(id:int):
 
 
 
-def sort_todos(param: str):
+def sort_todos(param: str) -> list[dict]:
+    todo_list = todos_to_list()
+    sorted_todo_list = []
     match param:
         case 'prio':
-            pass
-
+            for i in range(len(PRIORITY.keys())):
+                for j in range(len(todo_list)):
+                    if todo_list[j]['prio'] == i:
+                        sorted_todo_list.append(todo_list[j])
+        case 'status':
+            for i in range(len(STATUS.keys())):
+                for j in range(len(todo_list)):
+                    if todo_list[j]['status'] == i:
+                        sorted_todo_list.append(todo_list[j])
+    return sorted_todo_list
 
 # interface 
 def main():
@@ -166,5 +176,5 @@ def main():
                     print("некорректный приоритет")
                     continue
 
-change_todo(3,'name','todo')
+print(sort_todos('prio'))
 
