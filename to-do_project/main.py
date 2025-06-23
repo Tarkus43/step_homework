@@ -166,5 +166,5 @@ def main():
                     print("некорректный приоритет")
                     continue
 
-change_todo(1,'name','niga')
+change_todo(3,'name','todo')
 
