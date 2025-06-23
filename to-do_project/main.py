@@ -8,6 +8,11 @@ PRIORITY = {
     MEDIUM: "medium",
     HIGH: "high"
 }
+STATUS = {
+    LOW: "new",
+    MEDIUM: "in proccess",
+    HIGH: "completed, abandoned"
+}
 TODO_DICT = {'name':None, 'descr':None, 'id':None, 'prio':None, 'status':None}
 KEYS = ['name', 'descr', 'id', 'prio', 'status']
 EXAMPLE = 'name/description of todo/1/3/high'             
@@ -17,7 +22,7 @@ def todo_to_dict(todo:str) -> dict:
     if len(todo) < 9:
         return None
     todo_list = todo.split('/')
-    todo_dict = dict(zip(KEYS,todo_list))
+    todo_dict = dict(zip(TODO_DICT.keys(),todo_list))
     todo_dict['id'] = int(todo_dict['id'])
     return todo_dict
 
@@ -111,8 +116,8 @@ def main():
             case '1':
                 name = input('Введите имя задачи! \n--> ')
                 descr = input('Введите описание задачи! \n--> ')
-                prio = input('Введите приоритет задачи! \n1, 2 или 3 где 1 самый высокий \n--> ')
-                status = input('Введите cтатус задачи! \nактивно: 1 \nв процессе: 2 \nзаброшено, выполнено: 3 \n--> ')
+                prio = input('Введите приоритет задачи! \n1, 2 или 3 где 3 самый высокий \n--> ')
+                status = input('Введите cтатус задачи! \nновая: 1 \nв процессе: 2 \nзаброшено, выполнено: 3 \n--> ')
                 if prio == '1' or prio == '2' or prio == '3':
                     if status == '1' or status == '2' or status == '3':
                         add_todo({'name':name, 'descr':descr, 'id':next_id(), 'prio':prio, 'status':status})
@@ -123,7 +128,5 @@ def main():
                 else:
                     print("некорректный приоритет")
                     continue
-
-
 
 
