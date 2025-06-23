@@ -59,8 +59,11 @@ def get_todo(id:int) -> str:
         return 'ERROR: id does not exist'
     with open('db.txt','r') as file:
         for line in file:
+            if todo_to_dict(line) == None:
+                continue
             if todo_to_dict(line)['id'] == id:
                 return line
+        else: return 'todo with such id does not exist'
 
 
 # gets next id
@@ -124,6 +127,8 @@ def delete_todo(id:int):
     except IndexError:
         print('wrong id')
         raise IndexError
+    
+
 
 # interface 
 def main():
@@ -151,6 +156,5 @@ def main():
                     print("некорректный приоритет")
                     continue
 
-
-
+main()
 
