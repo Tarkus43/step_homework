@@ -17,6 +17,12 @@ TODO_DICT = {'name':None, 'descr':None, 'id':None, 'prio':None, 'status':None}
 KEYS = ['name', 'descr', 'id', 'prio', 'status']
 EXAMPLE = 'name/description of todo/1/3/high'             
 
+def todos_to_list():
+    todo_list = []
+    with open('db.txt', 'r') as file:
+        for line in file:
+            todo_list.append(todo_to_dict(line.strip()))
+    return todo_list
 
 # changes todo from string format to dict format so python can easily work with it
 def todo_to_dict(todo:str) -> dict:
@@ -87,12 +93,9 @@ def find_todo(key_word:str) -> list[dict]:
 # changing todo and rewriting it to file
 def change_todo(id: int, param: str, text: str) -> str:
     try:
-        if param != 'name' or param != 'descr':
+        if param != 'name' and param != 'descr':
             raise NameError 
-        todo_list = []
-        with open('db.txt', 'r') as file:
-            for line in file:
-                todo_list.append(todo_to_dict(line.strip()))
+        todo_list = todos_to_list()
 
         for todo in todo_list:
             if todo['id'] == id:
@@ -127,7 +130,14 @@ def delete_todo(id:int):
     except IndexError:
         print('wrong id')
         raise IndexError
-    
+
+
+
+
+def sort_todos(param: str):
+    match param:
+        case 'prio':
+            pass
 
 
 # interface 
@@ -156,5 +166,5 @@ def main():
                     print("некорректный приоритет")
                     continue
 
-main()
+change_todo(1,'name','niga')
 
