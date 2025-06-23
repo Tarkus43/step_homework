@@ -99,29 +99,30 @@ def delete_todo(id:int):
             file.write(dict_to_todo(todo) + '\n')
 
 # interface 
-while True:
-    user_input = input('Добавить задачу: 1 \nПросмотреть задач: 2 \nОбновить задачу : 3 \nУдалить задачу: 4 \nВыйти из программы: 0 \n -->')
-    match user_input:
-        case '0':
-            print('завершение...')
-            print('завершено')
+def main():
+    while True:
+        user_input = input('Добавить задачу: 1 \nПросмотреть задач: 2 \nОбновить задачу : 3 \nУдалить задачу: 4 \nВыйти из программы: 0 \n -->')
+        match user_input:
+            case '0':
+                print('завершение...')
+                print('завершено')
 
-            break
-        case '1':
-            name = input('Введите имя задачи! \n--> ')
-            descr = input('Введите описание задачи! \n--> ')
-            prio = input('Введите приоритет задачи! \n1, 2 или 3 где 1 самый высокий \n--> ')
-            status = input('Введите cтатус задачи! \nактивно: 1 \nв процессе: 2 \nзаброшено, выполнено: 3 \n--> ')
-            if prio == '1' or prio == '2' or prio == '3':
-                if status == '1' or status == '2' or status == '3':
-                    add_todo({'name':name, 'descr':descr, 'id':next_id(), 'prio':prio, 'status':status})
-                    print('\nзадача успешно добавлена\n!')
-                else: 
-                    print('некоректный статус')
+                break
+            case '1':
+                name = input('Введите имя задачи! \n--> ')
+                descr = input('Введите описание задачи! \n--> ')
+                prio = input('Введите приоритет задачи! \n1, 2 или 3 где 1 самый высокий \n--> ')
+                status = input('Введите cтатус задачи! \nактивно: 1 \nв процессе: 2 \nзаброшено, выполнено: 3 \n--> ')
+                if prio == '1' or prio == '2' or prio == '3':
+                    if status == '1' or status == '2' or status == '3':
+                        add_todo({'name':name, 'descr':descr, 'id':next_id(), 'prio':prio, 'status':status})
+                        print('\nзадача успешно добавлена\n!')
+                    else: 
+                        print('некоректный статус')
+                        continue
+                else:
+                    print("некорректный приоритет")
                     continue
-            else:
-                print("некорректный приоритет")
-                continue
 
 
 
