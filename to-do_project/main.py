@@ -30,6 +30,8 @@ def todo_to_dict(todo:str) -> dict:
 
 # changes todo in dict format to string format for reading or adding to txt file
 def dict_to_todo(todo:dict[str:str,str:str,str:int,str:int,str:str]) -> str:
+    if todo == None:
+        return None
     return '/'.join([str(x) for x in todo.values()])
 
 
@@ -81,37 +83,47 @@ def find_todo(key_word:str) -> list[dict]:
 
 # changing todo and rewriting it to file
 def change_todo(id: int, param: str, text: str) -> str:
-    todo_list = []
-    with open('db.txt', 'r') as file:
-        for line in file:
-            todo_list.append(todo_to_dict(line.strip()))
+    try:
+        if param != 'name' or param != 'descr':
+            raise NameError 
+        todo_list = []
+        with open('db.txt', 'r') as file:
+            for line in file:
+                todo_list.append(todo_to_dict(line.strip()))
 
-    for todo in todo_list:
-        if todo['id'] == id:
-            todo[param] = text
-            break
-
-    with open('db.txt', 'w') as file:
         for todo in todo_list:
-            file.write(dict_to_todo(todo) + '\n')
+            if todo['id'] == id:
+                todo[param] = text
+                break
+
+        with open('db.txt', 'w') as file:
+            for todo in todo_list:
+                file.write(dict_to_todo(todo) + '\n')
+    except NameError:
+        print('wrong parameter')
 
 
 # deleting todo from txt file
 def delete_todo(id:int):
-    todo_list = []
-    with open('db.txt', 'r') as file:
-        for line in file:
-            todo_list.append(todo_to_dict(line.strip()))
+    try:
+        if get_todo(id) == 'ERROR: id does not exist':
+            raise IndexError
+        todo_list = []
+        with open('db.txt', 'r') as file:
+            for line in file:
+                todo_list.append(todo_to_dict(line.strip()))
     
-    for i in range(len(todo_list)):
-        if todo_list[i]['id'] == id:
-            del todo_list[i]
-            break
+        for i in range(len(todo_list)):
+            if todo_list[i]['id'] == id:
+                del todo_list[i]
+                break
     
-    with open('db.txt', 'w') as file:
-        for todo in todo_list:
-            file.write(dict_to_todo(todo) + '\n')
-
+        with open('db.txt', 'w') as file:
+            for todo in todo_list:
+                file.write(dict_to_todo(todo) + '\n')
+    except IndexError:
+        print('wrong id')
+        raise IndexError
 
 # interface 
 def main():
@@ -138,5 +150,7 @@ def main():
                 else:
                     print("некорректный приоритет")
                     continue
+
+
 
 
