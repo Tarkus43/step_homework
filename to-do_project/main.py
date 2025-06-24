@@ -84,8 +84,11 @@ def find_todo(key_word:str) -> list[dict]:
     todo_list = []
     with open('db.txt','r') as file:
         for todo in file:
-            if key_word in todo_to_dict(todo)['name'] or key_word in todo_to_dict(todo)['descr']:
-                todo_list.append(todo_to_dict(todo))
+            line = todo_to_dict(todo.strip())
+            if not line:
+                continue
+            if key_word in line['name'] or key_word in line['descr']:
+                todo_list.append(line)
     if len(todo_list) == 0:
         return 'Did not found'
     else:
@@ -160,18 +163,21 @@ def print_todos(todo_list:list[dict]) -> str:
 # interface 
 def main():
     while True:
-        user_input = input('Добавить задачу: 1 \nПросмотреть задач: 2 \nОбновить задачу : 3 \nУдалить задачу: 4 \nВыйти из программы: 0 \n -->')
+        user_input = input('\nДобавить задачу --> 1 \nПросмотреть задачи --> 2 \nОбновить задачу --> 3 \nУдалить задачу --> 4 \nВыйти из программы --> 0 \n -->').strip()
+        
         match user_input:
             case '0':
                 print('завершение...')
                 print('завершено')
 
                 break
+            
+            
             case '1':
-                name = input('Введите имя задачи! \n--> ')
-                descr = input('Введите описание задачи! \n--> ')
-                prio = input('Введите приоритет задачи! \n1, 2 или 3 где 3 самый высокий \n--> ')
-                status = input('Введите cтатус задачи! \nновая: 1 \nв процессе: 2 \nзаброшено, выполнено: 3 \n--> ')
+                name = input('Введите имя задачи! \n--> ').strip()
+                descr = input('Введите описание задачи! \n--> ').strip()
+                prio = input('Введите приоритет задачи! \n1, 2 или 3 где 1 самый высокий \n--> ').strip()
+                status = input('Введите cтатус задачи! \nновая: 1 \nв процессе: 2 \nзаброшено, выполнено: 3 \n--> ').strip()
                 if prio == '1' or prio == '2' or prio == '3':
                     if status == '1' or status == '2' or status == '3':
                         add_todo({'name':name, 'descr':descr, 'id':next_id(), 'prio':prio, 'status':status})
@@ -182,7 +188,41 @@ def main():
                 else:
                     print("некорректный приоритет")
                     continue
+            
+            
+            case '2':
+                user_input = input('\nОтобразить задачи в изначальном виде --> 1 \nОтсортировать по статусу --> 2 \nОтсортировать по приоритету --> 3 \nОсуществить поиск по названию или описанию --> 4 \n -->')
+                match user_input:
+                    case '1':
+                        print('')
+                        print_todos(todos_to_list())
+                        print('')
+                    
+                    case '2':
+                        print('')
+                        print_todos(sort_todos('status'))
+                        print('')
 
-print_todos(todo_to_dict(EXAMPLE))
+                    case '3':
+                        print('')
+                        print_todos(sort_todos('prio'))
+                        print('')
+                    
+                    case '4':
+                        user_input = input('Введите ключевое слово для поиска --> ')
+                        print_todos(find_todo(user_input))
 
+                    case _:
+                        print('Неправильный ввод, попробуйте еще раз!')
+            
+            case '3': pass
+            
+            
+            case '4': pass
+            
+            
+            case _:
+                print('Неправильный ввод, попробуйте еще раз!')
+
+main()
 
