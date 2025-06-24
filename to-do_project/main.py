@@ -133,7 +133,7 @@ def delete_todo(id:int) -> str:
         print('wrong id')
         raise IndexError
 
-
+# sorting todos by some parameter
 def sort_todos(param:str) -> list[dict]:
     flag = None
     if param == 'prio':
@@ -142,7 +142,7 @@ def sort_todos(param:str) -> list[dict]:
         flag == False
     return sorted(todos_to_list(), key=lambda x: int(x[param]), reverse=flag)
 
-
+# printing todos for user
 def print_todos(todo_list:list[dict]) -> str:
     if type(todo_list) == list:
         for i in range(len(todo_list)):
