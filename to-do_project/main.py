@@ -4,18 +4,18 @@ HIGH = "1"
 MEDIUM = "2"
 LOW = "3"
 PRIORITY = {
-    LOW: "low",
-    MEDIUM: "medium",
-    HIGH: "high"
+    LOW:"Высокий",
+    MEDIUM: "Средний",
+    HIGH: "Низкий"
 }
 STATUS = {
-    LOW: "new",
-    MEDIUM: "in proccess",
-    HIGH: "completed or abandoned"
+    LOW: "новый",
+    MEDIUM: "в процессе",
+    HIGH: "выполнено или заброшено"
 }
 TODO_DICT = {'name':None, 'descr':None, 'id':None, 'prio':None, 'status':None}
 KEYS = ['name', 'descr', 'id', 'prio', 'status']
-EXAMPLE = 'name/description of todo/1/3/high'             
+EXAMPLE = 'name/description of todo/1/3/3'             
 
 
 # makes from all todos one list of them
@@ -143,7 +143,19 @@ def sort_todos(param:str) -> list[dict]:
     return sorted(todos_to_list(), key=lambda x: int(x[param]), reverse=flag)
 
 
+def print_todos(todo_list:list[dict]) -> str:
+    if type(todo_list) == list:
+        for i in range(len(todo_list)):
+            print(f'\nНазвание задачи: {todo_list[i]['name']}')
+            print(f'Описание задачи: {todo_list[i]['descr']}')
+            print(f'Приоритет задачи: {PRIORITY[todo_list[i]['prio']]}')
+            print(f'Статус задачи: {STATUS[todo_list[i]['status']]}')
 
+    else:
+        print(f'\nНазвание задачи: {todo_list['name']}')
+        print(f'\n Описание задачи: {todo_list['descr']}')
+        print(f'\nПриоритет задачи: {PRIORITY[todo_list['prio']]}')
+        print(f'\nСтатус задачи: {STATUS[todo_list['status']]}')
 
 # interface 
 def main():
@@ -171,6 +183,6 @@ def main():
                     print("некорректный приоритет")
                     continue
 
-
+print_todos(todo_to_dict(EXAMPLE))
 
 
