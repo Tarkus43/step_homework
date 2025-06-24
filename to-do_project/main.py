@@ -17,6 +17,8 @@ TODO_DICT = {'name':None, 'descr':None, 'id':None, 'prio':None, 'status':None}
 KEYS = ['name', 'descr', 'id', 'prio', 'status']
 EXAMPLE = 'name/description of todo/1/3/high'             
 
+
+# makes from all todos one list of them
 def todos_to_list() -> list[dict]:
     todo_list = []
     with open('db.txt', 'r') as file:
@@ -132,23 +134,16 @@ def delete_todo(id:int) -> str:
         raise IndexError
 
 
+def sort_todos(param:str) -> list[dict]:
+    flag = None
+    if param == 'prio':
+        flag = True
+    elif param == 'status' or  param == 'id':
+        flag == False
+    return sorted(todos_to_list(), key=lambda x: int(x[param]), reverse=flag)
 
 
-def sort_todos(param: str) -> list[dict]:
-    todo_list = todos_to_list()
-    sorted_todo_list = []
-    match param:
-        case 'prio':
-            for i in range(len(PRIORITY.keys())):
-                for j in range(len(todo_list)):
-                    if todo_list[j]['prio'] == i:
-                        sorted_todo_list.append(todo_list[j])
-        case 'status':
-            for i in range(len(STATUS.keys())):
-                for j in range(len(todo_list)):
-                    if todo_list[j]['status'] == i:
-                        sorted_todo_list.append(todo_list[j])
-    return sorted_todo_list
+
 
 # interface 
 def main():
@@ -176,5 +171,6 @@ def main():
                     print("некорректный приоритет")
                     continue
 
-print(sort_todos('prio'))
+
+
 
