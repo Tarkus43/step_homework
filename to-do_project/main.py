@@ -49,7 +49,7 @@ def dict_to_todo(todo:dict[str:str,str:str,str:int,str:int,str:str]) -> str:
 # adds todo to txt file
 def add_todo(todo:dict) -> None:
     with open('db.txt','a') as db:
-        db.write('\n' + dict_to_todo(todo))
+        db.write( dict_to_todo(todo) + '\n')
 
 
 # gets highest id to find last todo
@@ -166,6 +166,17 @@ def print_todos(todo_list:list[dict]) -> str:
         print(f'\nПриоритет задачи: {PRIORITY[todo_list['prio']]}')
         print(f'\nСтатус задачи: {STATUS[todo_list['status']]}')
 
+
+# cleaning from empty lines in file
+def clean():
+    with open('db.txt', 'r') as file:
+        lines = [x for x in file]
+
+    cleaned_lines = [x for x in lines if x.strip() != '']
+
+    with open('db.txt', 'w') as file:
+        file.writelines(cleaned_lines)
+
 # interface 
 def main():
     while True:
@@ -255,11 +266,12 @@ def main():
                     case _:
                         print('Неправильный ввод, попробуйте еще раз!')    
 
-            case '4': pass
-            
-            
+            case '4': 
+                pass
+
             case _:
                 print('Неправильный ввод, попробуйте еще раз!')
 
-main()
+# main()
 
+clean()
