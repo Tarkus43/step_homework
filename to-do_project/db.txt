@@ -1,5 +1,1 @@
-bombi/mi bimbi/1/2/1
-todo/description of todo/3/3/3
-name/description/4/2/1
-aboba/i like aboba/5/1/3
-name/description/6/1/2
+пример задачи/описание задачи/1/1/1
