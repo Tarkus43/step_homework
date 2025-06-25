@@ -9,9 +9,9 @@ PRIORITY = {
     HIGH: "Низкий"
 }
 STATUS = {
-    LOW: "новый",
-    MEDIUM: "в процессе",
-    HIGH: "выполнено или заброшено"
+    LOW: "Новый",
+    MEDIUM: "В процессе",
+    HIGH: "Выполнено или заброшено"
 }
 TODO_DICT = {'name':None, 'descr':None, 'id':None, 'prio':None, 'status':None}
 KEYS = ['name', 'descr', 'id', 'prio', 'status']
@@ -28,6 +28,9 @@ def todos_to_list() -> list[dict]:
 
 # changes todo from string format to dict format so python can easily work with it
 def todo_to_dict(todo:str) -> dict:
+    if todo == None:
+        return todo
+    todo = todo.strip()
     if len(todo) < 9:
         return None
     todo_list = todo.split('/')
@@ -64,7 +67,7 @@ def get_last_id() -> int:
 # gets todo in str type by id
 def get_todo(id:int) -> str:
     if id > get_last_id():
-        return 'ERROR: id does not exist'
+        return None
     with open('db.txt','r') as file:
         for line in file:
             if todo_to_dict(line) == None:
@@ -90,7 +93,7 @@ def find_todo(key_word:str) -> list[dict]:
             if key_word in line['name'] or key_word in line['descr']:
                 todo_list.append(line)
     if len(todo_list) == 0:
-        return 'Did not found'
+        return None
     else:
         return todo_list
 
@@ -98,7 +101,7 @@ def find_todo(key_word:str) -> list[dict]:
 # changing todo and rewriting it to file
 def change_todo(id: int, param: str, text: str) -> str:
     try:
-        if param != 'name' and param != 'descr':
+        if param not in  ['name', 'descr','prio','status']:
             raise NameError 
         todo_list = todos_to_list()
 
@@ -147,6 +150,9 @@ def sort_todos(param:str) -> list[dict]:
 
 # printing todos for user
 def print_todos(todo_list:list[dict]) -> str:
+    if todo_list == None:
+        print('\nТакой задачи нет')
+        return None
     if type(todo_list) == list:
         for i in range(len(todo_list)):
             print(f'\nНазвание задачи: {todo_list[i]['name']}')
@@ -163,7 +169,7 @@ def print_todos(todo_list:list[dict]) -> str:
 # interface 
 def main():
     while True:
-        user_input = input('\n--Добавить задачу --> 1 \n--Просмотреть задачи --> 2 \n--Обновить задачу --> 3 \n--Удалить задачу --> 4 \n--Выйти из программы --> 0 \n -->').strip()
+        user_input = input('\n-- Добавить задачу --> 1 \n-- Просмотреть задачи --> 2 \n-- Обновить задачу --> 3 \n-- Удалить задачу --> 4 \n-- Выйти из программы --> 0 \n -->').strip()
         
         match user_input:
             case '0':
@@ -189,9 +195,8 @@ def main():
                     print("--некорректный приоритет")
                     continue
             
-            
             case '2':
-                user_input = input('\n--Отобразить задачи в изначальном виде --> 1 \n--Отсортировать по статусу --> 2 \n--Отсортировать по приоритету --> 3 \n--Осуществить поиск по названию или описанию --> 4 \n -->')
+                user_input = input('\n-- Отобразить задачи в изначальном виде --> 1 \n-- Отсортировать по статусу --> 2 \n-- Отсортировать по приоритету --> 3 \n-- Осуществить поиск по названию или описанию --> 4 \n -->').strip()
                 match user_input:
                     case '1':
                         print('')
@@ -209,15 +214,47 @@ def main():
                         print('')
                     
                     case '4':
-                        user_input = input('\n--Введите ключевое слово для поиска --> ')
+                        user_input = input('\n-- Введите ключевое слово для поиска --> ')
                         print_todos(find_todo(user_input))
 
                     case _:
-                        print('Неправильный ввод, попробуйте еще раз!')
+                        print('\n!!!Неправильный ввод, попробуйте еще раз!!!')
             
-            case '3': pass
-            
-            
+            case '3': 
+                id = int(input('\n-- Введите ID задачи --> ').strip())
+                if print_todos(todo_to_dict(get_todo(id))) == None:
+                    print('Неправильный ID')
+                    continue
+                print_todos(todo_to_dict(get_todo(id)))
+                user_input_menu = input('\n-- название --> 1\n-- описание --> 2\n-- приоритет --> 3\n-- статус --> 4 \n-->').strip()
+
+                match user_input_menu:
+                    case '1':
+                        user_input = input('\n-- Введите новое название -->')
+                        change_todo(id, 'name', user_input)
+                    case '2':
+                        user_input = input('\n-- Введите новое описание -->')
+                        change_todo(id, 'descr', user_input)
+                    case '3':
+                        while True:
+                            user_input = input('\n-- Введите новый приоритет \n1, 2 или 3 где 1 самый высокий \n-->').strip()
+                            if user_input not in PRIORITY.keys():
+                                print('Неправильный ввод, попробуйте еще раз!')
+                                continue   
+                            change_todo(id, 'prio', user_input)
+                            break
+                    case '4':
+                         while True:
+                            user_input = input('\n-- Введите новый статус \nновая: 1 \nв процессе: 2 \nзаброшено, выполнено: 3 \n--> ').strip()
+                            if user_input not in STATUS.keys():
+                                print('Неправильный ввод, попробуйте еще раз!')
+                                continue   
+                            change_todo(id, 'status', user_input)
+                            break
+                    
+                    case _:
+                        print('Неправильный ввод, попробуйте еще раз!')    
+
             case '4': pass
             
             
