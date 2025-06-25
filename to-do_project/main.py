@@ -278,5 +278,7 @@ def main():
             case _:
                 print('Неправильный ввод, попробуйте еще раз!')
 
+
+# starting programm
 main()
 
