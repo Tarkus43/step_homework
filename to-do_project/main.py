@@ -49,7 +49,7 @@ def dict_to_todo(todo:dict[str:str,str:str,str:int,str:int,str:str]) -> str:
 # adds todo to txt file
 def add_todo(todo:dict) -> None:
     with open('db.txt','a') as db:
-        db.write( dict_to_todo(todo) + '\n')
+        db.write('\n'+  dict_to_todo(todo) )
 
 
 # gets highest id to find last todo
@@ -199,6 +199,7 @@ def main():
                     if status == '1' or status == '2' or status == '3':
                         add_todo({'name':name, 'descr':descr, 'id':next_id(), 'prio':prio, 'status':status})
                         print('\n--задача успешно добавлена\n!')
+                        clean()
                     else: 
                         print('--некоректный статус')
                         continue
@@ -267,11 +268,15 @@ def main():
                         print('Неправильный ввод, попробуйте еще раз!')    
 
             case '4': 
-                pass
+                id = int(input('\n-- Введите ID задачи --> ').strip())
+                if get_todo(id) == None:
+                    print('Неправильный ID')
+                    continue
+                delete_todo(id)
+                print('Задача успешно удалена!')
 
             case _:
                 print('Неправильный ввод, попробуйте еще раз!')
 
-# main()
+main()
 
-clean()
