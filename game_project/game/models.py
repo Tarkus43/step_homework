@@ -12,7 +12,12 @@ class Player:
 
     def select_attack(self,atk:str):
         # игрок выбирает атаку, заставит ввести пока не будет валидное значение
-        pass
+        while True:
+            user_input = input('-- Выбор атаки -- \n-- камень --> 1\n-- ножницы --> 2 \n-- бумага --> 3\n---> ')
+            if user_input in settings.ALLOWED_ATTACKS.keys():
+                return settings.ALLOWED_ATTACKS[user_input]
+            else:
+                print('-- !!!Неверный ввод, попробуйте еще раз!!! --')
     
     def decrease_lives(self):
         # если игрок проигрывает бой - то он теряет жизни
@@ -24,6 +29,5 @@ class Player:
 
 
 
-
-        
+            
 

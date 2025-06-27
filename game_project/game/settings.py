@@ -20,9 +20,9 @@ DRAW = 0
 LOSE = -1
 
 ALLOWED_ATTACKS = {
-    '1': PAPER,
-    '2': STONE,
-    '3': SCISSORS
+    '1': STONE,
+    '2': SCISSORS,
+    '3': PAPER
 }
 
 ATTACK_PAIRS_OUTCOME = {
