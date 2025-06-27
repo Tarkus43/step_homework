@@ -1,3 +1,6 @@
+MENU_OPTIONS = {'1':'start',
+                '2':'leaderboard',
+                '3':'exit'}
 MODE_NORMAL = 'Normal'
 MODE_HARD = 'Hard'
 MODES = {'1': MODE_NORMAL,
