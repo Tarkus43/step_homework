@@ -28,6 +28,13 @@ class Player:
         self.score += scr
 
 
+class Enemy:
+    difficulty:str = settings.MODES['1']
+    level:int = 1
+    lives = settings.PLAYER_LIVES + level - 1 
 
+    def __init__(self, level:int, diff:str):
+        self.level = level
+        self.difficulty = diff
             
 
