@@ -1,5 +1,6 @@
 import settings
 import random
+import exceptions
 
 class Player:
     # класс игрока, сущность
@@ -40,4 +41,11 @@ class Enemy:
     
     def select_attack(self) -> str:
         return settings.ALLOWED_ATTACKS[str(random.randint(1,3))]
+    
+    def decrease_lives(self) -> exceptions.EnemyDown:
+        self.lives -= 1
+
+        if self.lives <= 0:
+            raise exceptions.EnemyDown
+    
 
