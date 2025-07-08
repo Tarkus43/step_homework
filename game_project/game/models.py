@@ -1,10 +1,11 @@
 import settings
+import random
 
 class Player:
     # класс игрока, сущность
 
-    lives = settings.PLAYER_LIVES
-    score = 0
+    lives:int = settings.PLAYER_LIVES
+    score:int = 0
 
     def __init__(self, name:str):
         # игрок вписывает своё имя
@@ -23,7 +24,7 @@ class Player:
         # если игрок проигрывает бой - то он теряет жизни
         self.lives -= 1
 
-    def add_score(self,scr:int):
+    def add_score(self, scr:int):
         # добавляет очки игроку
         self.score += scr
 
@@ -36,5 +37,7 @@ class Enemy:
     def __init__(self, level:int, diff:str):
         self.level = level
         self.difficulty = diff
-            
+    
+    def select_attack(self) -> str:
+        return settings.ALLOWED_ATTACKS[str(random.randint(1,3))]
 
