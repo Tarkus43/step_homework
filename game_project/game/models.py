@@ -31,18 +31,22 @@ class Player:
 
 
 class Enemy:
+    # класс врага
     difficulty:str = settings.MODES['1']
     level:int = 1
     lives = settings.PLAYER_LIVES + level - 1 
 
     def __init__(self, level:int, diff:str):
+        # инициализация
         self.level = level
         self.difficulty = diff
     
     def select_attack(self) -> str:
+        # выбор атаки врагом
         return settings.ALLOWED_ATTACKS[str(random.randint(1,3))]
     
     def decrease_lives(self) -> exceptions.EnemyDown:
+        # метод отнимающий жизни
         self.lives -= 1
 
         if self.lives <= 0:
