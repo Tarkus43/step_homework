@@ -1,7 +1,7 @@
-from . import settings
 import random
+from unittest.mock import Mock
 from .exceptions import EnemyDown, GameOver
-
+from . import settings
 class Player:
     # класс игрока, сущность
 
@@ -12,14 +12,14 @@ class Player:
         # игрок вписывает своё имя
         self.name = name
 
-    def select_attack(self,atk:str):
+    def select_attack(self):
         # игрок выбирает атаку, заставит ввести пока не будет валидное значение
-        while True:
-            user_input = input('-- Выбор атаки -- \n-- камень --> 1\n-- ножницы --> 2 \n-- бумага --> 3\n---> ')
-            if user_input in settings.ALLOWED_ATTACKS.keys():
-                return settings.ALLOWED_ATTACKS[user_input]
-            else:
-                print('-- !!!Неверный ввод, попробуйте еще раз!!! --')
+            while True:
+                user_input = input('-- Выбор атаки -- \n-- камень --> 1\n-- ножницы --> 2 \n-- бумага --> 3\n---> ')
+                if user_input in settings.ALLOWED_ATTACKS.keys():
+                    return settings.ALLOWED_ATTACKS[user_input]
+                else:
+                    print('-- !!!Неверный ввод, попробуйте еще раз!!! --')
     
     def decrease_lives(self):
         # если игрок проигрывает бой - то он теряет жизни
@@ -52,4 +52,3 @@ class Enemy:
         if self.lives <= 0:
             raise EnemyDown
     
-

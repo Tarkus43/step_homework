@@ -14,9 +14,9 @@ HARD_MODE_MULTIPLIER = 2
 
 SCORE_FILE = 'scores.txt'
 
-PAPER = 'Paper'
 STONE = 'Stone'
 SCISSORS = 'Scissors'
+PAPER = 'Paper'
 
 WIN = 1
 DRAW = 0
