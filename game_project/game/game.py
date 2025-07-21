@@ -1,16 +1,16 @@
-import models
-import settings
-import exceptions
+from .models import Player,Enemy
+from . import settings
+from . import exceptions
 
 
 
 class Game():
     # класс игры
-    player: models.Player
-    enemy: models.Enemy
+    player: Player
+    enemy: Enemy
 
     
-    def __init__(self,player:models.Player,difficulty):
+    def __init__(self,player:Player,difficulty):
         # инициализация
         self.player = player
 
@@ -19,7 +19,7 @@ class Game():
         else:
             print('неправильный ввод!')
 
-        self.enemy = models.Enemy
+        self.enemy = Enemy
     
     
     
@@ -59,7 +59,7 @@ class Game():
             level = self.enemy.level + 1
         else:
             level = 1
-        self.enemy = models.Enemy(level,self.difficulty)
+        self.enemy = Enemy(level,self.difficulty)
     
     def play(self):
         # процесс игры

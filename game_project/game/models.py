@@ -1,6 +1,6 @@
-import settings
+from . import settings
 import random
-import exceptions
+from .exceptions import EnemyDown, GameOver
 
 class Player:
     # класс игрока, сущность
@@ -45,11 +45,11 @@ class Enemy:
         # выбор атаки врагом
         return settings.ALLOWED_ATTACKS[str(random.randint(1,3))]
     
-    def decrease_lives(self) -> exceptions.EnemyDown:
+    def decrease_lives(self) -> None:
         # метод отнимающий жизни
         self.lives -= 1
 
         if self.lives <= 0:
-            raise exceptions.EnemyDown
+            raise EnemyDown
     
 
