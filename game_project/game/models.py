@@ -24,6 +24,8 @@ class Player:
     def decrease_lives(self):
         # если игрок проигрывает бой - то он теряет жизни
         self.lives -= 1
+        if self.lives <= 0:
+            raise GameOver
 
     def add_score(self, scr:int):
         # добавляет очки игроку
