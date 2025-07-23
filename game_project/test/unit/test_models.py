@@ -77,6 +77,18 @@ class TestEnemy(unittest.TestCase):
         self.assertEqual(enemy.lives,settings.PLAYER_LIVES + enemy.level - 1 ,'should be 3')
     
 
+    def test_decrease_lives_enemy(self):
+        enemy = Enemy(1,'1')
+        enemy.decrease_lives()
+        self.assertEqual(enemy.lives,1,'should be 1')
+
+    def test_decrease_lives_EnemyDown(self):
+        with self.assertRaises(EnemyDown):
+            enemy = Enemy(1,'1')
+            enemy.decrease_lives()
+            enemy.decrease_lives()
+
+
 if __name__ == '__main__':
     unittest.main()
 
