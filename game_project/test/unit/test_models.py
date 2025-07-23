@@ -35,8 +35,11 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(result, 'Stone')
 
     def test_decrease_lives(self):
-        self.player.decrease_lives()
-        self.assertEqual(self.player.lives,1,'should be 1')
+        player = Player('tarkus')
+        player.lives = 2
+        player.decrease_lives()
+        self.assertEqual(player.lives,1,'should be 1')
+
 
     def setUp(self):
         self.player.decrease_lives()
@@ -48,6 +51,10 @@ class TestPlayer(unittest.TestCase):
     def tearDown(self):
         self.player.lives = 2
 
+    def test_add_score(self):
+        self.player.add_score(1)
+
+        self.assertEqual(self.player.score, 1, 'should be 1')
     
 
 if __name__ == '__main__':
