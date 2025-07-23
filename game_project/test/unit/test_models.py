@@ -4,6 +4,7 @@ from unittest.mock import Mock
 from unittest.mock import patch
 from game.models import Player,Enemy
 from game.exceptions import GameOver,EnemyDown
+from game import settings
 
 
 class TestPlayer(unittest.TestCase):
@@ -55,6 +56,25 @@ class TestPlayer(unittest.TestCase):
         self.player.add_score(1)
 
         self.assertEqual(self.player.score, 1, 'should be 1')
+
+
+class TestEnemy(unittest.TestCase):
+    
+    def test_init_level(self):
+        enemy = Enemy(1,'1')
+        self.assertEqual(enemy.level,1,'should be 1')
+    
+    def test_init_difficulty(self):
+        enemy = Enemy(1,'1')
+        self.assertEqual(enemy.difficulty,settings.MODES['1'],'should be Normal')
+    
+    def test_init_lives(self):
+        enemy = Enemy(1,'1')
+        self.assertEqual(enemy.lives,settings.PLAYER_LIVES,'should be 2')
+    
+    def test_init_bigger_level(self):
+        enemy = Enemy(2,'1')
+        self.assertEqual(enemy.lives,settings.PLAYER_LIVES + enemy.level - 1 ,'should be 3')
     
 
 if __name__ == '__main__':

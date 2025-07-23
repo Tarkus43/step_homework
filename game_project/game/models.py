@@ -34,14 +34,14 @@ class Player:
 
 class Enemy:
     # класс врага
-    difficulty:str = settings.MODES['1']
+    difficulty:int = 1
     level:int = 1
-    lives = settings.PLAYER_LIVES + level - 1 
+    lives = settings.PLAYER_LIVES + level + difficulty - 2 
 
     def __init__(self, level:int, diff:str):
         # инициализация
         self.level = level
-        self.difficulty = diff
+        self.difficulty = int(diff)
     
     def select_attack(self) -> str:
         # выбор атаки врагом
