@@ -66,7 +66,7 @@ class TestEnemy(unittest.TestCase):
     
     def test_init_difficulty(self):
         enemy = Enemy(1,'1')
-        self.assertEqual(enemy.difficulty,settings.MODES['1'],'should be Normal')
+        self.assertEqual(enemy.difficulty,1,'should be 1')
     
     def test_init_lives(self):
         enemy = Enemy(1,'1')
