@@ -2,6 +2,8 @@ import random
 from unittest.mock import Mock
 from .exceptions import EnemyDown, GameOver
 from . import settings
+
+
 class Player:
     # класс игрока, сущность
 
