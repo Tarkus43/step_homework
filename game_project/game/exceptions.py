@@ -3,3 +3,6 @@ class GameOver(Exception):
 
 class EnemyDown(Exception):
     pass
+
+class WrongInput(Exception):
+    pass
