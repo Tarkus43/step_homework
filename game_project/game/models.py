@@ -17,8 +17,9 @@ class Player:
     def select_attack(self):
         # игрок выбирает атаку, заставит ввести пока не будет валидное значение
             while True:
-                user_input = input('-- Выбор атаки -- \n-- камень --> 1\n-- ножницы --> 2 \n-- бумага --> 3\n---> ')
+                user_input = input('\n-- Выбор атаки -- \n-- камень --> 1\n-- ножницы --> 2 \n-- бумага --> 3\n---> ')
                 if user_input in settings.ALLOWED_ATTACKS.keys():
+                    print(f'\n-- Вы выбрали {settings.ALLOWED_ATTACKS[user_input]} --\n')
                     return settings.ALLOWED_ATTACKS[user_input]
                 else:
                     print('-- !!!Неверный ввод, попробуйте еще раз!!! --')

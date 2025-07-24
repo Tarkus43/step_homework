@@ -10,20 +10,21 @@ class Game():
     enemy: Enemy
 
     
-    def __init__(self,player:Player,difficulty):
+    def __init__(self,player:Player,difficulty:str):
         # инициализация
         self.player = player
 
-        if difficulty in int(settings.MODES.keys):
+        if difficulty in settings.MODES.keys():
+            self.enemy = Enemy(1,difficulty)
             self.difficulty = difficulty
         else:
             print('неправильный ввод!')
 
-        self.enemy = Enemy
+        
     
     
     
-    def fight(self) -> int:
+    def __fight(self) -> int:
         # бой 
         player_input = self.player.select_attack()
         enemy_input = self.enemy.select_attack()
@@ -31,13 +32,15 @@ class Game():
 
 
     
-    def handle_fight_result(self,result:int):
+    def __handle_fight_result(self,result:int):
         # обработчик боя
         if result == 1:
+            print('\n-- Победа! --\n')
             self.enemy.decrease_lives()
         elif result == 0:
-            print('-- ничья! --')
+            print('\n-- Ничья! --\n')
         elif result == -1:
+            print('\n-- Поражение --\n')
             self.player.decrease_lives()
         else:
             raise ValueError
@@ -48,12 +51,12 @@ class Game():
             raise exceptions.EnemyDown       
 
     
-    def save_score(self):
+    def __save_score(self):
         # метод сохраняющий счёт
         pass
 
     
-    def new_enemy(self):
+    def __new_enemy(self):
         # создание нового врага
         if hasattr(self, 'enemy'):
             level = self.enemy.level + 1
@@ -65,11 +68,17 @@ class Game():
         # процесс игры
         while True:
             try:
-                self.fight()
-                self.handle_fight_result()
+                self.__handle_fight_result(self.__fight())
+                print(f'-- Ваше здоровье: {self.player.lives} --')
+                print(f'-- У противника осталось {self.enemy.lives} очков здоровья! --')
             
             except exceptions.EnemyDown:
                 self.player.score += 1
-                self.new_enemy()
+                self.__new_enemy()
+                self.player.lives = 2
+                print('\n-- вы победили --\n-- новый противник! --')
+            
             except exceptions.GameOver:
-                self.save_score()
+                print('\n-- ИГРА ОКОНЧЕНА --')
+                self.__save_score()
+                break
